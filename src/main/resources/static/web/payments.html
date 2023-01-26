@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payments</title>
+  <link rel="shortcut icon" href="./assets/img/payments.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="content">
+    <p class="d-none">{{filterByAccount}}</p>
+    <header class="bg-dark header-accounts">
+      <div>
+        <input type="checkbox" id="ham-menu">
+        <label for="ham-menu">
+          <div class="hide-des">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+          </div>
+        </label>
+        <div class="full-page-green"></div>
+        <div class="ham-menu d-flex flex-column">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+            class="bi bi-bank2 text-light animate__animated animate__bounceInDown mx-auto mt-3" style="width: 4rem;"
+            viewBox="0 0 16 16">
+            <path
+              d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+          </svg>
+          <p class="fs-5 mt-2 text-center text-light mb-5 fw-bold">Mindhub Brothers</p>
+          <ul class="text-center fw-bold">
+            <span class="btn-nav"><a href="./accounts.html"
+                class="text-decoration-none text-light fw-bold">Products</a></span>
+            <span class="btn-nav"><a href="./cards.html"
+                class="text-decoration-none text-light fw-bold">Cards</a></span>
+            <span class="btn-nav"><a href="./transfer.html"
+                class="text-decoration-none text-light fw-bold">Transfers</a></span>
+            <span class="btn-nav" id="active"><a href="#"
+                class="text-decoration-none text-light fw-bold">Payments</a></span>
+            <span class="btn-nav" @click="logOut"><a href="#" class="text-decoration-none text-light fw-bold">Sign
+                off</a></span>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h1
+          class="display-4 fw-bold text-center text-white p-3 animate__animated animate__bounce  ms-2 mb-0 pb-0 title-account">
+          Payments</h1>
+      </div>
+      <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          class="bi bi-bank2 animate__animated animate__bounceInDown text-light" style="width: 2rem;"
+          viewBox="0 0 16 16">
+          <path
+            d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+        </svg>
+        <h3 class="fs-5 me-3 animate__animated animate__bounce text-light">Mindhub Brothers</h3>
+      </div>
+    </header>
+
+    <main class="main-payments d-flex justify-content-center flex-wrap">
+      <div class="d-flex flex-wrap justify-content-center gap-3 div-form" style="padding-top: 4rem;">
+        <form class="bg-dark p-4 form-payments rounded animate__animated animate__bounce">
+          <h2 class="text-light fw-bold mb-2">Data Card to Pay</h2>
+          <hr class="text-light">
+          <h4 class="text-light fw-bold">Select account for info cards:</h4>
+          <template v-for="{balance, number} in accounts">
+            <div>
+              <label class="text-light fs-5" :for=number>{{number}} <span class="fw-bold me-2">Balance: ${{balance.toLocaleString()}}</span></label>
+              <input type="radio" class="mb-4" :id="number" :value="number" name="accountOrigin" v-model="accountSelected"> 
+            </div>
+          </template>
+          <hr class="text-light">
+          <div>
+            <label class="form-check-label text-light fw-bold fs-5 me-2 mt-4" for="cardHolder">CardHolder:</label>
+            <input style="width: 10rem;" id="cardHolder" v-model="cardHolderSelect" type="text" name="text" class="input-amount" placeholder="Name LastName">
+          </div>
+
+          <div>
+            <label class="form-check-label text-light fw-bold fs-5 me-2 mt-4" for="numberCard">Number Card:</label>
+            <input style="width: 12rem;" id="numberCard" v-model="cardNumber" type="text" name="text" class="input-amount" placeholder="1111-1111-1111-1111">
+          </div>
+
+          <div>
+            <label for="date" class="form-check-label text-light fw-bold fs-5 me-2 mt-4">Expiration date:</label>
+            <input id="date" v-model="expDate" class="input-amount" type="date">
+          </div>
+
+          <div>
+            <label for="cvv" class="form-check-label text-light fw-bold fs-5 me-2 mt-4">Cvv:</label>
+            <input id="cvv" type="number" v-model="cvv" class="input-amount" placeholder="Example: 000">
+          </div>
+
+          <div>
+            <label for="amount" class="form-check-label text-light fw-bold fs-5 me-2 mt-4">Amount to pay:</label>
+            <input id="amount" type="number" v-model="amount" class="input-amount" placeholder="$15000">
+          </div>
+
+          <div class="d-flex description">
+            <label class="form-check-label text-light fw-bold fs-5 mt-3 me-2" for="description">Description: </label>
+            <div>
+              <textarea v-model="description" class="rounded mt-3 input-amount" placeholder="Write a description" id="description" cols="30" rows="2"></textarea>
+            </div>
+          </div>
+
+          <div>
+            <label class="form-check-label text-light fw-bold fs-5 me-2 mt-4" for="destiny">Account Destiny:</label>
+            <input style="width: 12rem;" id="destiny" v-model="accountDestiny" type="text" name="text" class="input-amount" placeholder="VIN111111">
+          </div>
+          <button class="mt-3 btn btn-primary fs-4" @click.prevent="makePay">Make Pay</button>
+        </form>
+
+        <div class="bg-dark rounded p-3 animate__animated animate__bounce">
+          <h5 class="text-light fs-3 mb-4 mt-3 fw-bold">Cards associated with the account</h5>
+          <p class="text-light p-3 fs-3 fw-bold mb-0" v-show="cardCurrent == 0">Select an account</p>
+          <p class="text-light p-3 fs-3 fw-bold mb-0" v-show="accountSelected == undefined || cardCurrent.length == 0">This account don't have cards</p>
+          <template v-for="{cardHolder, number, thruDate, cvv} in cardCurrent">
+            <div class="bg-secondary rounded p-3 mb-3">
+              <p class="text-light fs-4 mt-3 fw-bold">Card information</p>
+              <p class="text-light fw-bold">CardHolder: {{cardHolder}}</p>
+              <p class="text-light fw-bold">Number Card: {{number}}</p>
+              <p class="text-light fw-bold">Expiration Date: {{thruDate}}</p>
+              <p class="text-light text-decoration-line-through fw-bold">CVV: {{cvv}}</p>
+            </div>
+          </template>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center p-5 d-lg-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between footer-bootom">
+        <h3 class="fs-3 me-3 animate__animated animate__bounce">Mindhub Brothers</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          class="bi bi-bank2 animate__animated animate__bounceInDown" style="width: 3rem;" viewBox="0 0 16 16">
+          <path
+            d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+        </svg>
+      </div>
+      <div class="d-flex justify-content-between">
+        <h5 class="fs-3 me-3 animate__animated animate__bounce">Developed by: <span class="text-info">Sebastian
+            Valbuena</span></h5>
+        <li><a href="https://www.facebook.com/" target="_blank"><img src="./assets/img/facebook.png"
+              class="ms-2 animate__animated animate__bounceInDown" alt="imagen facebook" style="width: 2rem;"></a></li>
+        <li><a href="https://www.instagram.com/sebastianvalbuena9246/" target="_blank"><img
+              src="./assets/img/instagram.png" class="ms-2 animate__animated animate__bounceInDown"
+              alt="imagen instagram" style="width: 2rem;"></a></li>
+        <li><a href="https://www.linkedin.com/in/sebastianvalbuenaacosta/" target="_blank"><img
+              src="./assets/img/linkedin.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen linkedin"
+              style="width: 2rem;"></a></li>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https:/app.embed.im/snow.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./assets/payments.js"></script>
+</body>
+
+</html>

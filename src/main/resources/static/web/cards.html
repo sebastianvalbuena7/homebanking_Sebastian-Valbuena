@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+    <link rel="shortcut icon" href="./assets/img/flujo-de-dinero-icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="content">
+        <header class="bg-dark header-accounts">
+            <div>
+              <input type="checkbox" id="ham-menu">
+              <label for="ham-menu">
+                <div class="hide-des">
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                </div>
+              </label>
+              <div class="full-page-green"></div>
+              <div class="ham-menu d-flex flex-column">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 text-light animate__animated animate__bounceInDown mx-auto mt-3" style="width: 4rem;" viewBox="0 0 16 16">
+                  <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+                </svg>
+                <p class="fs-5 mt-2 text-center text-light mb-5 fw-bold">Mindhub Brothers</p>
+                <ul class="text-center fw-bold">
+                  <span class="btn-nav"><a href="./accounts.html" class="text-decoration-none text-light fw-bold">Products</a></span>
+                  <span class="btn-nav" id="active"><a href="#" class="text-decoration-none text-light fw-bold">Cards</a></span>
+                  <span class="btn-nav"><a href="./transfer.html" class="text-decoration-none text-light fw-bold">Transfers</a></span>
+                  <span class="btn-nav"><a href="./payments.html" class="text-decoration-none text-light fw-bold">Payments</a></span>
+                  <span class="btn-nav" @click="logOut"><a class="text-decoration-none text-light fw-bold">Sign off</a></span>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h1 class="display-4 fw-bold text-center text-white p-3 animate__animated animate__bounce  ms-2 mb-0 pb-0 title-account">Cards</h1>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 animate__animated animate__bounceInDown text-light" style="width: 2rem;" viewBox="0 0 16 16">
+                <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+              </svg>
+                <h3 class="fs-5 me-3 animate__animated animate__bounce text-light">Mindhub Brothers</h3>
+            </div>
+          </header>
+
+          <main class="card-main">
+            <h2 class="text-light display-5 text-center fw-bold mt-5 mb-3 animate__animated animate__fadeInDown">Your cards</h2>
+
+            <div>
+                <h3 class="text-light display-6 ms-3 fw-bold animate__animated animate__bounce">Hello, {{data.firstName}} {{data.lastName}}</h3>
+                <button v-show="filterCard.length < 6" class="btn btn-dark mt-4 mb-4 fw-bold fs-3 ms-3"><a class="text-decoration-none text-light" href="./create-cards.html">Create a card</a></button>
+
+                <div>
+                    <h4 class="text-light fs-3 fw-bold ms-3 mt-4 animate__animated animate__bounce">Credit cards:</h4>
+                    <div class="d-flex justify-content-center flex-wrap" style="margin-top: 5rem; gap: 10rem; margin-bottom: 5rem;">
+                        <div v-for="{color, type, number, cardHolder, fromDate, thruDate, cvv, id } in cardsCredit">
+                            <div class="wrapper">
+                                <div class="cards card face" :class="color == 'TITANIUM' ? 'titanium-card' : color == 'SILVER' ? 'silver-card' : color == 'GOLD' ? 'gold-card' : ''">
+                                    <div class="face">
+                                        <div class="head">
+                                            <div class="title">
+                                                {{type}} CARD
+                                            </div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="card__logo" width="70" height="20" viewBox="0 0 175.7 53.9">
+                                                <path class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1"
+                                                />
+                                                <path fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <div class="main">
+                                            <div class="number-title">Card number:</div>
+                                            <div class="number" :class="thruDate.substr(0,4) < dateString ? 'line-t ' : ''">{{number}}</div>
+                                            <div class="mt-1">{{cardHolder}}</div>
+                                        </div>
+                                        <div class="dates">
+                                            <div class="start" :class="thruDate.substr(0,4) < dateString ? 'line-t ' : ''">
+                                                {{fromDate.substr(8, 9)}}/{{fromDate.substr(2, 2)}}
+                                            </div>
+                                            <div class="end" :class="thruDate.substr(0,4) < dateString ? 'line-t ' : ''">
+                                                {{thruDate.substr(8, 9)}}/{{thruDate.substr(2, 2)}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="back" :class="color == 'TITANIUM' ? 'titanium-card' : color == 'SILVER' ? 'silver-card' : color == 'GOLD' ? 'gold-card' : ''">
+                                        <div :class="color == 'TITANIUM' ? 'magnetic-line-white' : 'magnetic-line'">
+                                        </div>
+                                        <div class="cvv d-flex flex-column">
+                                            <p class="mb-1">CVV</p>
+                                            <p>{{cvv}}</p> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="d-flex justify-content-center mt-3">
+                                <input class="btn btn-primary fw-bold" value="Delete" type="submit" @click.prevent="deleteCard(id)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="cardsCredit.length == 0">
+                        <p class="text-center text-light fw-bold display-4" style="margin-bottom: 10rem;">You don't have credit cards</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-light fs-3 fw-bold ms-3 mt-4 animate__animated animate__bounce">Debit cards:</h4>
+                    <div class="d-flex justify-content-center flex-wrap" style="margin-top: 5rem; gap: 10rem; margin-bottom: 5rem;" v-if="cardsDebit.length > 0">
+                        <div v-for="{cvv, color, type, number, cardHolder, fromDate, thruDate, id} in cardsDebit">
+                            <div class="wrapper">
+                                <div class="cards card face" :class="color == 'TITANIUM' ? 'titanium-card' : color == 'SILVER' ? 'silver-card' : color == 'GOLD' ? 'gold-card' : 'Nada'">
+                                    <div class="face">
+                                        <div class="head">
+                                            <div class="title">
+                                                {{type}} CARD
+                                            </div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="card__logo" width="70" height="20" viewBox="0 0 175.7 53.9">
+                                                <path class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1"
+                                                />
+                                                <path fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <div class="main">
+                                            <div class="number-title">Card number:</div>
+                                            <div class="number" :class="thruDate.substr(0,4) < dateString ? 'line-t' : ''">{{number}}</div>
+                                            <div class="mt-1">{{cardHolder}}</div>
+                                        </div>
+                                        <div class="dates">
+                                            <div class="start" :class="thruDate.substr(0,4) < dateString ? 'line-t' : ''">
+                                                {{fromDate.substr(8, 9)}}/{{fromDate.substr(2, 2)}}
+                                            </div>
+                                            <div class="end" :class="thruDate.substr(0,4) < dateString > dateString ? 'line-t' : ''">
+                                                {{thruDate.substr(8, 9)}}/{{thruDate.substr(2, 2)}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="back" :class="color == 'TITANIUM' ? 'titanium-card' : color == 'SILVER' ? 'silver-card' : color == 'GOLD' ? 'gold-card' : 'Nada'">
+                                        <div :class="color == 'TITANIUM' ? 'magnetic-line-white' : 'magnetic-line'">
+                                        </div>
+                                        <div class="cvv d-flex flex-column">
+                                            <p class="mb-1">CVV</p>
+                                            <p>{{cvv}}</p> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <input class="btn btn-primary fw-bold" value="Delete" type="submit" @click.prevent="deleteCard(id)">
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div v-if="cardsDebit.length == 0">
+                        <p class="text-center text-light fw-bold display-4" style="margin-bottom: 10rem; margin-top: 10rem;">You don't have debit cards</p>
+                    </div>
+                </div>
+            </div>
+          </main>
+
+          <footer class="bg-dark text-white text-center p-5 d-lg-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between footer-bootom">
+              <h3 class="fs-3 me-3 animate__animated animate__bounce">Mindhub Brothers</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 animate__animated animate__bounceInDown" style="width: 3rem;" viewBox="0 0 16 16">
+                <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+            </svg>
+            </div>
+            <div class="d-flex justify-content-between">
+              <h5 class="fs-3 me-3 animate__animated animate__bounce">Developed by: <span class="text-info">Sebastian Valbuena</span></h5>
+              <li><a href="https://www.facebook.com/" target="_blank"><img src="./assets/img/facebook.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen facebook" style="width: 2rem;"></a></li>
+              <li><a href="https://www.instagram.com/sebastianvalbuena9246/" target="_blank"><img src="./assets/img/instagram.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen instagram" style="width: 2rem;"></a></li>
+              <li><a href="https://www.linkedin.com/in/sebastianvalbuenaacosta/" target="_blank"><img src="./assets/img/linkedin.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen linkedin" style="width: 2rem;"></a></li>
+            </div>
+          </footer>
+    </div>
+
+    <script src="https:/app.embed.im/snow.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./assets/cards.js"></script>
+</body>
+</html>

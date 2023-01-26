@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make transactions</title>
+    <link rel="shortcut icon" href="./assets/img/transferencia-bancaria.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="content">
+        <p class="d-none">{{filterAccount}}</p>
+        <header class="bg-dark header-accounts">
+            <div>
+              <input type="checkbox" id="ham-menu">
+              <label for="ham-menu">
+                <div class="hide-des">
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                  <span class="menu-line"></span>
+                </div>
+              </label>
+              <div class="full-page-green"></div>
+              <div class="ham-menu d-flex flex-column">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 text-light animate__animated animate__bounceInDown mx-auto mt-3" style="width: 4rem;" viewBox="0 0 16 16">
+                  <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+                </svg>
+                <p class="fs-5 mt-2 text-center text-light mb-5 fw-bold">Mindhub Brothers</p>
+                <ul class="text-center fw-bold">
+                  <span class="btn-nav"><a href="./accounts.html" class="text-decoration-none text-light fw-bold">Products</a></span>
+                  <span class="btn-nav"><a href="./cards.html" class="text-decoration-none text-light fw-bold">Cards</a></span>
+                  <span class="btn-nav" id="active"><a href="#" class="text-decoration-none text-light fw-bold" >Transfers</a></span>
+                  <span class="btn-nav"><a href="./payments.html" class="text-decoration-none text-light fw-bold">Payments</a></span>
+                  <span class="btn-nav" @click="logOut"><a class="text-decoration-none text-light fw-bold">Sign off</a></span>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h1 class="display-4 fw-bold text-center text-white p-3 animate__animated animate__bounce mb-0 pb-0">Make transactions</h1>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 animate__animated animate__bounceInDown text-light" style="width: 2rem;" viewBox="0 0 16 16">
+                <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+            </svg>
+            <h3 class="fs-5 me-3 animate__animated animate__bounce text-light">Mindhub Brothers</h3>
+            </div>
+          </header>
+
+          <main class="card-main">
+            <div class="d-flex flex-wrap gap-3 justify-content-center div-form" style="padding-top: 4rem;">
+                <form class="bg-dark p-4 form-transactions rounded">
+                    <h2 class="text-light fw-bold mb-3 mt-3">Choose who to transfer to</h2>
+                    <p class="text-light fs-5 fw-bold mb-2">Choose the source account</p>
+                    <div class="d-flex justify-content-between flex-wrap">
+                      <template v-for="{number, balance} in accounts">
+                        <div>
+                          <label class="text-light fs-5" :for=number>{{number}} <span class="fw-bold me-2">Balance: ${{balance.toLocaleString()}}</span></label>
+                          <input type="radio" class="mb-4" :id="number" :value="number" name="accountOrigin" v-model="accountOrigin"> 
+                        </div>
+                      </template>
+                    </div>
+                    <hr class="text-light">
+                    <div class="d-flex">
+                        <div>
+                            <label class="form-check-label text-light fw-bold fs-5 me-2" for="own">Own Account</label>
+                            <input class="form-check-input me-5 mb-3" type="radio" name="form-trans"  id="own" v-model="typeAccount" value="own" style="margin-top: 0.4rem;">
+                        </div>
+
+                        <div>
+                            <label class="form-check-label text-light fw-bold fs-5 me-2" for="other">Other Account</label>
+                            <input class="form-check-input" type="radio" name="form-trans" v-model="typeAccount" value="other" id="other" style="margin-top: 0.4rem;">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div v-if="typeAccount == 'own'">
+                            <label for="selectAccount" class="text-light fw-bold fs-5 me-2">Choice your account:</label>
+                            <select id="selectAccount" class="rounded" v-model="accountOwner">
+                              <template v-for="account in excludeAccounts">
+                                <option :value=account>{{account}}</option>  
+                              </template>
+                            </select>
+                        </div>
+                        <div v-if="typeAccount == 'other'">
+                            <label for="otherAccount" class="text-light fw-bold fs-5 me-3">Write the number account:</label>
+                            <input style="width: 10rem;" id="otherAccount" v-model="accountOther" name="text" class="input-amount" placeholder="Example: VIN999">
+                        </div>
+                    </div>
+            
+                    <div>
+                        <label class="form-check-label text-light fw-bold fs-5 me-2 mt-4" for="money">Money to transfer:</label>
+                        <input style="width: 10rem;" id="money" v-model="money" type="number" name="text" class="input-amount" placeholder="Example: $200">
+                    </div>
+
+                    <div class="d-flex description">
+                        <label class="form-check-label text-light fw-bold fs-5 mt-3 me-2" for="description">Description: </label>
+                        <div>
+                          <textarea v-model="description" class="rounded mt-3 input-amount" placeholder="Write a description" id="description" cols="30" rows="2"></textarea>
+                        </div>
+                    </div>
+        
+                    <button class="mt-3 btn btn-primary fs-4" @click.prevent data-bs-toggle="modal" data-bs-target="#staticBackdrop">Make transaction</button>
+          
+                    <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true" data-bs-theme="dark">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-2 fw-bold" id="staticBackdropLabel">Alert!</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <p class="text-light fw-bold fs-3">Are you sure to make the transfer?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" @click.prevent="makeTransaction">Yes, I am sure</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+                <div>
+                  <img src="./assets/img/transfer-image.jpg.png" class="image-transfer rounded animate__animated animate__bounce" alt="Transfer Image">
+                </div>
+            </div>
+          </main>
+
+          <footer class="bg-dark text-white text-center p-5 d-lg-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between footer-bootom">
+              <h3 class="fs-3 me-3 animate__animated animate__bounce">Mindhub Brothers</h3>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 animate__animated animate__bounceInDown" style="width: 3rem;" viewBox="0 0 16 16">
+                <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+              </svg>
+            </div>
+            <div class="d-flex justify-content-between">
+              <h5 class="fs-3 me-3 animate__animated animate__bounce">Developed by: <span class="text-info">Sebastian Valbuena</span></h5>
+              <li><a href="https://www.facebook.com/" target="_blank"><img src="./assets/img/facebook.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen facebook" style="width: 2rem;"></a></li>
+              <li><a href="https://www.instagram.com/sebastianvalbuena9246/" target="_blank"><img src="./assets/img/instagram.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen instagram" style="width: 2rem;"></a></li>
+              <li><a href="https://www.linkedin.com/in/sebastianvalbuenaacosta/" target="_blank"><img src="./assets/img/linkedin.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen linkedin" style="width: 2rem;"></a></li>
+            </div>
+          </footer>
+    </div>
+
+    <script src="https:/app.embed.im/snow.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./assets/transfer.js"></script>
+</body>
+</html>

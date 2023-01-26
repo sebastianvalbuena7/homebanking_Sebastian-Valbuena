@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="shortcut icon" href="./assets/img/transaccion-favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="content">
+  <header class="bg-dark header-accounts">
+    <div>
+      <input type="checkbox" id="ham-menu">
+      <label for="ham-menu">
+        <div class="hide-des">
+          <span class="menu-line"></span>
+          <span class="menu-line"></span>
+          <span class="menu-line"></span>
+          <span class="menu-line"></span>
+          <span class="menu-line"></span>
+          <span class="menu-line"></span>
+        </div>
+      </label>
+      <div class="full-page-green"></div>
+      <div class="ham-menu d-flex flex-column">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 text-light animate__animated animate__bounceInDown mx-auto mt-3" style="width: 4rem;" viewBox="0 0 16 16">
+          <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+        </svg>
+        <p class="fs-5 mt-2 text-center text-light mb-5 fw-bold">Mindhub Brothers</p>
+        <ul class="text-center fw-bold">
+          <span class="btn-nav"><a href="./accounts.html" class="text-decoration-none text-light fw-bold">Products</a></span>
+          <span class="btn-nav"><a href="./cards.html" class="text-decoration-none text-light fw-bold">Cards</a></span>
+          <span class="btn-nav"><a href="./transfer.html" class="text-decoration-none text-light fw-bold">Transfers</a></span>
+          <span class="btn-nav"><a href="./payments.html" class="text-decoration-none text-light fw-bold">Payments</a></span>
+          <span class="btn-nav" @click="logOut"><a href="#" class="text-decoration-none text-light fw-bold">Sign off</a></span>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h1 class="display-4 fw-bold text-center text-white p-3 animate__animated animate__bounce  ms-2 mb-0 pb-0 title-account">Transactions</h1>
+    </div>
+    <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 animate__animated animate__bounceInDown text-light" style="width: 2rem;" viewBox="0 0 16 16">
+        <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+      </svg>
+        <h3 class="fs-5 me-3 animate__animated animate__bounce text-light">Mindhub Brothers</h3>
+    </div>
+  </header>
+
+  <main class="main-account">
+    <p class="display-2 fw-bold text-center text-light" style="margin-top: 5rem; margin-bottom: 5rem;" v-if="data.length == 0">You have not made transactions</p>
+    <div class="transaction container-fluid">
+      <h4 class="text-white fs-1 my-3 animate__animated animate__bounce fw-bold">Account: {{dataTitle.number}}</h4>
+      <h4 class="text-white fs-2 my-3 animate__animated animate__bounce fw-bold">Balance: {{balanceAccount.toLocaleString()}}</h4>
+      <div class="table-responsive" v-if="data.length > 0">
+        <table class="table table-dark pe-2 rounded animate__animated animate__bounceInDown">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Description</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Type</th>
+              <th scope="col">Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="{date, description, type, amount, balanceCurrent} in data">
+              <td>{{date.substr(0,10)}}</td>
+              <td>{{date.substr(11,8)}}</td>
+              <td>{{description}}</td>
+              <td>$ {{type == 'DEBIT' ? '-' : ''}}{{amount.toFixed(2)}}</td>
+              <td :class="type == 'DEBIT' ? 'bg-danger' : 'bg-success'">{{type}}</td>
+              <td>{{balanceCurrent}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h6 class="fw-bold fs-3 text-light text-center mb-4">Select years to generate PDF:</h6>
+        <div class="d-flex flex-wrap justify-content-center">
+          <p class="fw-bold text-light fs-5 me-3">Start Date: </p>
+          <input type="datetime-local" v-model="yearStartSelected" class="me-3 form-select" style="width: 16rem; height: 2rem;">
+
+          <p class="fw-bold text-light fs-5 me-3">End Date: </p>
+          <input type="datetime-local" v-model="yearEndSelected" class="me-3 form-select" style="width: 16rem; height: 2rem;">
+        </div>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-danger fw-bold mt-3" @click="downloadPDF">Download PDF</button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-5">
+        <img src="./assets/img/transaction.png" v-if="data.length > 0" class="border border-5 border-dark animate__animated animate__bounceInDown img-account rounded" style="width: 32rem;" alt="Image Transaction">
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white text-center p-5 d-lg-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between footer-bootom">
+      <h3 class="fs-3 me-3 animate__animated animate__bounce">Mindhub Brothers</h3>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bank2 animate__animated animate__bounceInDown" style="width: 3rem;" viewBox="0 0 16 16">
+        <path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z"/>
+      </svg>
+    </div>
+    <div class="d-flex justify-content-between">
+      <h5 class="fs-3 me-3 animate__animated animate__bounce">Developed by: <span class="text-info">Sebastian Valbuena</span></h5>
+      <li><a href="https://www.facebook.com/" target="_blank"><img src="./assets/img/facebook.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen facebook" style="width: 2rem;"></a></li>
+      <li><a href="https://www.instagram.com/sebastianvalbuena9246/" target="_blank"><img src="./assets/img/instagram.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen instagram" style="width: 2rem;"></a></li>
+      <li><a href="https://www.linkedin.com/in/sebastianvalbuenaacosta/" target="_blank"><img src="./assets/img/linkedin.png" class="ms-2 animate__animated animate__bounceInDown" alt="imagen linkedin" style="width: 2rem;"></a></li>
+    </div>
+  </footer>
+</div>
+
+  <script src="https:/app.embed.im/snow.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./assets/account.js"></script>
+</body>
+</html>
