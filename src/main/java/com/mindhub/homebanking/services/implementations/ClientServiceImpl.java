@@ -12,7 +12,6 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
-
     @Override
     public List<Client> findAllClients() {
         return clientRepository.findAll();
