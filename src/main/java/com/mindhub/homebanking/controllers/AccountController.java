@@ -31,7 +31,7 @@ public class AccountController {
 
     @GetMapping("/accounts")
     public List<AccountDTO> getAccounts() {
-        return accountService.getAllAccounts().stream().map(account -> new AccountDTO(account)).toList();
+        return accountService.getAllAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
     }
 
     @GetMapping("/accounts/{id}")

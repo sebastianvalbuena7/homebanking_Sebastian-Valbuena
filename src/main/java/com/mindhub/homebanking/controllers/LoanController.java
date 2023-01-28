@@ -41,14 +41,14 @@ public class LoanController {
 
     @GetMapping("/loans")
     public List<LoanDTO> getLoans() {
-        return loanService.getAllLoans().stream().map(loan -> new LoanDTO(loan)).toList();
+        return loanService.getAllLoans().stream().map(loan -> new LoanDTO(loan)).collect(Collectors.toList());
     }
 
     @PostMapping("/loans/admin")
     public ResponseEntity<Object> createLoanAdmin(Authentication authentication, @RequestParam String name, @RequestParam int maxAmount, @RequestParam Integer[] payments) {
         Client client = clientService.finByEmail(authentication.getName());
         if(client.getFirstName().equals("admin")) {
-            List<Integer> newList = Arrays.stream(payments).toList();
+            List<Integer> newList = Arrays.stream(payments).collect(Collectors.toList());
             Loan newLoan = new Loan(name, maxAmount, newList, 1.50);
             loanService.saveLoan(newLoan);
             return new ResponseEntity<>(HttpStatus.CREATED);

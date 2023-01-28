@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
@@ -43,11 +44,11 @@ public class CardController {
         Client client = clientService.finByEmail(authentication.getName());
         Set<Card> cards = client.getCards();
         Account accountCurrent = accountService.findByNumber(account);
-        List<Card> cardsType = cards.stream().filter(card -> card.getShowCard()).filter(card -> card.getType() == tipo).toList();
+        List<Card> cardsType = cards.stream().filter(card -> card.getShowCard()).filter(card -> card.getType() == tipo).collect(Collectors.toList());
 
         if(accountCurrent == null) {
           return new ResponseEntity<>("Account invalid",HttpStatus.NOT_FOUND);
-        } else if(cards.stream().filter(card -> card.getShowCard()).toList().size() == 6 || cardsType.size() == 3) {
+        } else if(cards.stream().filter(card -> card.getShowCard()).collect(Collectors.toList()).size() == 6 || cardsType.size() == 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             if(cardsType.stream().filter(card1 -> card1.getColor() == color).count() == 1) {

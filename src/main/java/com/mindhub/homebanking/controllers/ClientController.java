@@ -33,7 +33,7 @@ public class ClientController {
 
     @GetMapping("/clients")
     public List<ClientDTO> getClients() {
-        return clientService.findAllClients().stream().map(client -> new ClientDTO(client)).toList();
+        return clientService.findAllClients().stream().map(client -> new ClientDTO(client)).collect(Collectors.toList());
     }
 
     @GetMapping("/clients/{id}")
