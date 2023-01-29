@@ -1,10 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.AccountType;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.TransactionService;
@@ -61,8 +58,12 @@ public class AccountController {
         Set<Account> accounts = client.getAccounts();
         Account accountCurrent = accountService.getAccountById(id);
         Account accountFound = accounts.stream().filter(account -> account == accountCurrent).findFirst().orElse(null);
+        Set<Card> accountCards = accountFound.getCards().stream().filter(card -> card.getShowCard() == true).collect(Collectors.toSet());
         if(accountCurrent.getBalance() > 0) {
             return new ResponseEntity<>("You can't delete an account with a balance", HttpStatus.FORBIDDEN);
+        }
+        if(accountCards.size() > 0) {
+            return new ResponseEntity<>("You can't delete", HttpStatus.FORBIDDEN);
         }
 
         accountService.getAccountById(accountFound.getId()).setShowAccount(false);

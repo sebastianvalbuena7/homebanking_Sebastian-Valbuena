@@ -70,6 +70,9 @@ public class TransactionController {
         if(accountOrigin.getBalance() < amount) {
             return new ResponseEntity<>("La cuenta no tiene monto suficiente", HttpStatus.FORBIDDEN);
         }
+        if(amount.isNaN() || amount < 0) {
+            return new ResponseEntity<>("No i cant", HttpStatus.FORBIDDEN);
+        }
 
         Transaction transactionDebit = new Transaction(DEBIT, amount, description + " " + accountDestiny.getNumber(), LocalDateTime.now(), accountOrigin, true);
         transactionDebit.setBalanceCurrent(accountOrigin.getBalance() - amount);
